@@ -56,7 +56,7 @@ class MinHeap:
             if self._heap.get_at_index(child_index) < self._heap.get_at_index(parent):
                 # swaps the nodes by saving the old values first and then setting their new index.
                 curr_node = self._heap.get_at_index(child_index)
-                parent_node = self._heap.get_at_index(child_index)
+                parent_node = self._heap.get_at_index(parent)
                 self._heap.set_at_index(child_index, parent_node)
                 self._heap.set_at_index(parent, curr_node)
 
