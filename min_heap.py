@@ -4,7 +4,7 @@
 # Assignment: Assignment 5: MinHeap Implementation
 # Due Date: 5/26/2025
 # Description: MinHeap functionality Implementation
-
+from distutils.command.build import build
 
 from dynamic_array import *
 
@@ -96,7 +96,7 @@ class MinHeap:
         # removes the last element to complete the move
         self._heap.remove_at_index(last_index)
         # resorts the MinHeap by percolating the new root down
-        _percolate_down(self._heap, 0)
+        _percolate_down(self._heap, 0, self._heap.length())
         return min_val
 
     def build_heap(self, da: DynamicArray) -> None:
@@ -113,40 +113,52 @@ class MinHeap:
         # finds the last node that is not a leaf
         last_non_leaf = (self._heap.length() - 2) // 2
         for i in range(last_non_leaf, -1, -1):
-            _percolate_down(self._heap, i)
+            _percolate_down(self._heap, i, self._heap.length())
 
     def size(self) -> int:
         """
-        TODO: Write this implementation
+        Gives the size of the Heap
+
+        :return: An Integer that represents the size of the Heap
         """
-        pass
+        return self._heap.length()
 
     def clear(self) -> None:
         """
-        TODO: Write this implementation
+        Clears a MinHeap by creating a blank one and overwriting the old one
         """
-        pass
+        self._heap = DynamicArray()
 
 
 def heapsort(da: DynamicArray) -> None:
     """
-    TODO: Write this implementation
+    Sorts a DynamicArray using the heapsort algorithm
+
+    :param da: The DynamicArray being inputted to be sorted using heapsort
     """
-    pass
+    size = da.length()
+    # finds the last not leaf node and percolates down
+    for i in range((size - 2) // 2, -1, -1):
+        _percolate_down(da, i, size)
+    # sorts the
+    for i in range(size - 1, 0, -1):
+        temp = da.get_at_index(0)
+        da.set_at_index(0, da.get_at_index(i))
+        da.set_at_index(i, temp)
+        _percolate_down(da, 0, i)
 
 
 # It's highly recommended that you implement the following optional          #
 # helper function for percolating elements down the MinHeap. You can call    #
 # this from inside the MinHeap class. You may edit the function definition.  #
 
-def _percolate_down(da: DynamicArray, parent: int) -> None:
+def _percolate_down(da: DynamicArray, parent: int, size: int) -> None:
     """
     Percolates down the inputted element at the given parent index
 
     :param da: Represents a dynamicArray that is having its value percolated down
     :parent int: represent the integer that is the parent being percolated down
     """
-    size = da.length()
     left = 2 * parent + 1
     right = 2 * parent + 2
 
