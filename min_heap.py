@@ -1,9 +1,9 @@
-# Name:
-# OSU Email:
+# Name: Marc Hamilton
+# OSU Email: hamimarc@oregonstate.edu
 # Course: CS261 - Data Structures
-# Assignment:
-# Due Date:
-# Description:
+# Assignment: Assignment 5: MinHeap Implementation
+# Due Date: 5/26/2025
+# Description: MinHeap functionality Implementation
 
 
 from dynamic_array import *
@@ -41,9 +41,24 @@ class MinHeap:
 
     def add(self, node: object) -> None:
         """
-        TODO: Write this implementation
+        Adds a node to the MinHeap and sorts to make sure that the MinHeap follows
+
+        :param node: an object that is being added to the MinHeap
         """
-        pass
+        # adds the new node to the end of the heap
+        self._heap.append(node)
+        child_index = self._heap.length() - 1
+        parent = (child_index - 1) // 2
+        # checks to make sure we are not at the root, and that the current node is less than it's parents
+        while child_index > 0 and self._heap.get_at_index(child_index) < self._heap.get_at_index(parent):
+            # swaps the nodes by saving the old values first and then setting their new index.
+            curr_node = self._heap.get_at_index(child_index)
+            parent_node = self._heap.get_at_index(child_index)
+            self._heap.set_at_index(child_index, parent_node)
+            self._heap.set_at_index(parent, curr_node)
+
+            child_index = parent
+            parent = (child_index - 1) // 2
 
     def is_empty(self) -> bool:
         """
