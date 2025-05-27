@@ -101,9 +101,19 @@ class MinHeap:
 
     def build_heap(self, da: DynamicArray) -> None:
         """
-        TODO: Write this implementation
+        Builds a MinHeap from an unsorted DynamicArray
+
+        :param da: Represents the DynamicArray being added to the heap
         """
-        pass
+
+        self._heap = DynamicArray()
+        # copies DynamicArray into a Heap
+        for i in range(da.length()):
+            self._heap.append(da.get_at_index(i))
+        # finds the last node that is not a leaf
+        last_non_leaf = (self._heap.length() - 2) // 2
+        for i in range(last_non_leaf, -1, -1):
+            _percolate_down(self._heap, i)
 
     def size(self) -> int:
         """
