@@ -59,28 +59,45 @@ class MinHeap:
                 parent_node = self._heap.get_at_index(parent)
                 self._heap.set_at_index(child_index, parent_node)
                 self._heap.set_at_index(parent, curr_node)
-
+            # resets the child index to the current parent
             child_index = parent
-            parent = (child_index - 1) // 2
 
     def is_empty(self) -> bool:
         """
-        TODO: Write this implementation
+        Checks if the MinHeap is empty and returns a True or False value
+
+        :return: A boolean that represents if the Minheap is empty, true if it is empty, false if it is not.
         """
-        pass
+        return self._heap.length() == 0
 
     def get_min(self) -> object:
         """
-        TODO: Write this implementation
+        grabs the min value in the MinHeap and returns it without editing the MinHeap
+
+        :return: an object that represents the node with the min value in the MinHeap
         """
-        pass
+        if self.is_empty():
+            raise MinHeapException("This Heap Is Empty")
+        return self._heap.get_at_index(0)
 
     def remove_min(self) -> object:
         """
-        TODO: Write this implementation
-        """
-        pass
+        Returns and removes the min value from the MinHeap
 
+        :returns: An object that represents the node with the min value in the MinHeap
+        """
+        if self.is_empty():
+            raise MinHeapException("This Heap Is Empty")
+        min_val = self._heap.get_at_index(0)
+        # sets the last element as the new root of the MinHeap
+        last_index = self._heap.length() - 1
+        last_element = self._heap.get_at_index(last_index)
+        self._heap.set_at_index(0, last_element)
+        # removes the last element to complete the move
+        self._heap.remove_at_index(last_index)
+        # resorts the MinHeap by percolating the new root down
+        _percolate_down(self._heap, 0)
+        return min_val
     def build_heap(self, da: DynamicArray) -> None:
         """
         TODO: Write this implementation
@@ -113,9 +130,35 @@ def heapsort(da: DynamicArray) -> None:
 
 def _percolate_down(da: DynamicArray, parent: int) -> None:
     """
-    TODO: Write your implementation
+    Percolates down the inputted element at the given parent index
+
+    :param da: Represents a dynamicArray that is having its value percolated down
+    :parent int: represent the integer that is the parent being percolated down
     """
-    pass
+    size = da.length()
+    left = 2 * parent + 1
+    right = 2 * parent + 2
+
+    while left < size:
+        smallest = parent
+        # compares the left and right to find the smallest value
+        if da.get_at_index(left) < da.get_at_index(smallest):
+            smallest = left
+        elif right < size and da.get_at_index(right) < da.get_at_index(smallest):
+            smallest = right
+        # Checks if the heap property has been satisfied
+        if smallest == parent:
+            parent = size
+        else:
+            # swaps the nodes by saving the old values first and then setting their new index.
+            parent_val = da.get_at_index(parent)
+            child_val = da.get_at_index(smallest)
+            da.set_at_index(parent, child_val)
+            da.set_at_index(smallest, parent_val)
+            parent = smallest
+
+        left = 2 * parent + 1
+        right = 2 * parent + 2
 
 
 # ------------------- BASIC TESTING -----------------------------------------
