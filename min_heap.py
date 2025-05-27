@@ -88,6 +88,7 @@ class MinHeap:
         """
         if self.is_empty():
             raise MinHeapException("This Heap Is Empty")
+
         min_val = self._heap.get_at_index(0)
         # sets the last element as the new root of the MinHeap
         last_index = self._heap.length() - 1
@@ -132,7 +133,7 @@ class MinHeap:
 
 def heapsort(da: DynamicArray) -> None:
     """
-    Sorts a DynamicArray using the heapsort algorithm
+    Sorts a DynamicArray in non-ascending order using the heapsort algorithm
 
     :param da: The DynamicArray being inputted to be sorted using heapsort
     """
@@ -140,11 +141,11 @@ def heapsort(da: DynamicArray) -> None:
     # finds the last not leaf node and percolates down
     for i in range((size - 2) // 2, -1, -1):
         _percolate_down(da, i, size)
-    # sorts the
+    # Moves the min element to the end, then restores the heap properties on the reduced heap
     for i in range(size - 1, 0, -1):
-        temp = da.get_at_index(0)
+        min_val = da.get_at_index(0)
         da.set_at_index(0, da.get_at_index(i))
-        da.set_at_index(i, temp)
+        da.set_at_index(i, min_val)
         _percolate_down(da, 0, i)
 
 
@@ -158,6 +159,7 @@ def _percolate_down(da: DynamicArray, parent: int, size: int) -> None:
 
     :param da: Represents a dynamicArray that is having its value percolated down
     :parent int: represent the integer that is the parent being percolated down
+    :param size: represents the size of the array
     """
     left = 2 * parent + 1
     right = 2 * parent + 2
