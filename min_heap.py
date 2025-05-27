@@ -98,6 +98,7 @@ class MinHeap:
         # resorts the MinHeap by percolating the new root down
         _percolate_down(self._heap, 0)
         return min_val
+
     def build_heap(self, da: DynamicArray) -> None:
         """
         TODO: Write this implementation
@@ -142,10 +143,12 @@ def _percolate_down(da: DynamicArray, parent: int) -> None:
     while left < size:
         smallest = parent
         # compares the left and right to find the smallest value
-        if right < size and da.get_at_index(right) < da.get_at_index(smallest):
-            smallest = right
         if da.get_at_index(left) < da.get_at_index(smallest):
             smallest = left
+
+        # Checks if the right is strictly the smallest value out of the left and right
+        if right < size and da.get_at_index(right) < da.get_at_index(smallest):
+            smallest = right
 
         # Checks if the heap property has been satisfied
         if smallest == parent:
