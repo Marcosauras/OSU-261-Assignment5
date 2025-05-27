@@ -4,7 +4,6 @@
 # Assignment: Assignment 5: MinHeap Implementation
 # Due Date: 5/26/2025
 # Description: MinHeap functionality Implementation
-from distutils.command.build import build
 
 from dynamic_array import *
 
