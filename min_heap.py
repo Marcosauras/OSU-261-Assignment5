@@ -142,10 +142,10 @@ def _percolate_down(da: DynamicArray, parent: int) -> None:
     while left < size:
         smallest = parent
         # compares the left and right to find the smallest value
-        if da.get_at_index(left) < da.get_at_index(smallest):
-            smallest = left
-        elif right < size and da.get_at_index(right) < da.get_at_index(smallest):
+        if right < size and da.get_at_index(right) < da.get_at_index(smallest):
             smallest = right
+        elif da.get_at_index(left) < da.get_at_index(smallest):
+            smallest = left
         # Checks if the heap property has been satisfied
         if smallest == parent:
             parent = size
