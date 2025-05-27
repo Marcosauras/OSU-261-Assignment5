@@ -48,14 +48,17 @@ class MinHeap:
         # adds the new node to the end of the heap
         self._heap.append(node)
         child_index = self._heap.length() - 1
-        parent = (child_index - 1) // 2
-        # checks to make sure we are not at the root, and that the current node is less than it's parents
-        while child_index > 0 and self._heap.get_at_index(child_index) < self._heap.get_at_index(parent):
-            # swaps the nodes by saving the old values first and then setting their new index.
-            curr_node = self._heap.get_at_index(child_index)
-            parent_node = self._heap.get_at_index(child_index)
-            self._heap.set_at_index(child_index, parent_node)
-            self._heap.set_at_index(parent, curr_node)
+
+        # checks to make sure we are not at the root
+        while child_index > 0:
+            parent = (child_index - 1) // 2
+            # checks to make sure that the current node is less than it's parents
+            if self._heap.get_at_index(child_index) < self._heap.get_at_index(parent):
+                # swaps the nodes by saving the old values first and then setting their new index.
+                curr_node = self._heap.get_at_index(child_index)
+                parent_node = self._heap.get_at_index(child_index)
+                self._heap.set_at_index(child_index, parent_node)
+                self._heap.set_at_index(parent, curr_node)
 
             child_index = parent
             parent = (child_index - 1) // 2
